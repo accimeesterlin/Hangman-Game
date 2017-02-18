@@ -78,45 +78,44 @@ replaceDash();
 
 
 
-// Non Duplicated letters
-function nonDuplicated(){
-	typing.push(event.key);
-		norepeat = [];
-		norepeat = typing.filter(function(e, index, self) {
-		return index == typing.indexOf(e);
-	});
-
-	//console.log(norepeat);
 
 	
-}
 
 
 
 var typing = [];
-var norepeat = [];
+
 
 var wordMatch = [];
 
+var anotherTyping = [];
 
 document.onkeyup = function(event){
-nonDuplicated();
+// Non Duplicated letters
 
+typing.push(event.key);
+	var norepeat = typing.filter(function(e, index, self) {
+		return index == typing.indexOf(e);
+	});
+	
+hangman.output('Guessed', norepeat);
 
-hangman.output('Guessed', norepeat);	
 
 	arr.map(function(e, index) {
 		if(e === event.key){
-			wordMatch.push(e);
+			//wordMatch.push(e);
 			piece[index] = e;
 			hangman.output('currentWord', piece);
+			console.log("Testing")
 
 
 			if(piece.join("") === word){
 				console.log("Yayyyy, it worked!");
-				norepeat = [];
+				norepeat.length  = 0;
+
 				hangman.output('Guessed', norepeat);
-				console.log(piece.join(""));
+
+				//console.log(piece.join(""));
 
 				// word = hangman.randomWord();
 
@@ -127,15 +126,30 @@ hangman.output('Guessed', norepeat);
 				// console.log(norepeat);
 				// hangman.output('win', hangman.win++);
 			}
+
+	
 		}
+
+
 
 		
 	});
 
 
-console.log(norepeat.join(''));
+
+
+if(norepeat.length === 0){
+	norepeat.length = 0;
+	console.log("Yayyy");
+	//console.log(norepeat);
+	console.log(norepeat);
+
+}
+
+
 
 };
+
 
 
 // Generate a new word
@@ -152,6 +166,8 @@ console.log(norepeat.join(''));
 
 
 
+// Another pseudo code
+	// norepeat is equal
 
 
 
