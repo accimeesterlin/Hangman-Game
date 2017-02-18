@@ -2,6 +2,12 @@ var hangman = {
 	win:1, 		// Storing the win points
 	currentWord: ['sad', 'go', 'move', 'test'], 	// Storing words
 
+	title: ['title1', 'title2', 'title3', 'title4'],
+
+	music: ['music1', 'music2', 'music3', 'music4'],
+
+	images: ['picture1', 'picture2', 'picture3', 'picture4'],
+
 	
 	// Getting a random word from the current word array
 	randomWord: function(){
@@ -66,15 +72,19 @@ console.log(word);
 // Replacing the word with the Dash
 piece = [];
 function replaceDash(){
-	return arr.map(function(element){
-					piece = [];
-					var result = element.replace(element, ' __ ');
+	return arr.map(function(element, index){
+					// piece = [];
+					var result = arr[index].replace(arr[index], ' __ ');
+					// console.log(result);
 					piece.push(result);
+
+					// console.log(element);
 				});
 }
 
 replaceDash();
-//hangman.output("currentWord", piece);
+//console.log(piece);
+ hangman.output("currentWord", piece.join(""));
 
 
 
@@ -90,66 +100,99 @@ var wordMatch = [];
 
 var anotherTyping = [];
 
-document.onkeyup = function(event){
-// Non Duplicated letters
+var norepeat = [];
 
-typing.push(event.key);
-	var norepeat = typing.filter(function(e, index, self) {
+
+
+
+document.onkeyup = function(event){
+	// Non Duplicated letters
+	hangman.output("currentWord", piece.join(""));
+
+	typing.push(event.key);
+
+		norepeat = typing.filter(function(e, index, self) {
 		return index == typing.indexOf(e);
 	});
-	
-hangman.output('Guessed', norepeat);
 
 
-	arr.map(function(e, index) {
-		if(e === event.key){
-			//wordMatch.push(e);
-			piece[index] = e;
-			hangman.output('currentWord', piece);
-			console.log("Testing")
+	hangman.output('Guessed', norepeat);
 
 
-			if(piece.join("") === word){
-				console.log("Yayyyy, it worked!");
-				norepeat.length  = 0;
-
-				hangman.output('Guessed', norepeat);
-
-				//console.log(piece.join(""));
-
-				// word = hangman.randomWord();
-
-				// console.log(word);
-				// console.log(norepeat);
-				// replaceDash();
-				// console.log(piece);
-				// console.log(norepeat);
-				// hangman.output('win', hangman.win++);
-			}
-
-	
-		}
-
+		arr.map(function(e, index) {
+			if(e === event.key){
+				//wordMatch.push(e);
+				piece[index] = e;
+				hangman.output('currentWord', piece.join(""));
+				//console.log("Testing");
 
 
 		
-	});
+			}
+
+			else if(piece.join("") === word){
+					console.log("Yayyyy, it worked!");
+					// norepeat.length  = 0;
+
+					// hangman.output('Guessed', norepeat);
+
+					//console.log(piece.join(""));
+
+					// word = hangman.randomWord();
+
+					// console.log(word);
+					// console.log(norepeat);
+					// replaceDash();
+					// console.log(piece);
+					// console.log(norepeat);
+					// hangman.output('win', hangman.win++);
+				}
 
 
+			
+		});
 
-
-if(norepeat.length === 0){
-	norepeat.length = 0;
-	console.log("Yayyy");
-	//console.log(norepeat);
 	console.log(norepeat);
 
-}
+	if(!word.includes(event.key)){
+		hangman.output("guessRemaining", "Your chances remaining is " + hangman.guessRaiming--);
+
+		if(hangman.guessRaiming <= -1){
+			hangman.guessRaiming = 9;
+			hangman.output("guessRemaining", "Your chances remaining is " + hangman.guessRaiming--)	
+		}
+
+	}
+
+	else if(piece.join("") === word){
+		hangman.output("win", hangman.win++);
+
+		word = hangman.randomWord();
+
+		arr = word.split("");
+		console.log(word);
+		piece = [];
+		replaceDash();
+		hangman.output("currentWord", piece.join(""));
+		typing = [];
+		norepeat.length = 0;
+		hangman.guessRaiming = 9;
+		hangman.output("guessRemaining", "Your chances remaining is " + hangman.guessRaiming)
+
+		hangman.output("Guessed", norepeat)
+		console.log(norepeat);
+
+	}
+
+
+	console.log(norepeat);
+
+
+
 
 
 
 };
-
 
 
 // Generate a new word
@@ -166,9 +209,15 @@ if(norepeat.length === 0){
 
 
 
-// Another pseudo code
-	// norepeat is equal
 
+
+// if(norepeat.length === 0){
+// 	norepeat.length = 0;
+// 	console.log("Yayyy");
+// 	//console.log(norepeat);
+// 	console.log(norepeat);
+
+// }
 
 
 
