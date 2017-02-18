@@ -1,26 +1,30 @@
+
+
 var hangman = {
 	win:1, 		// Storing the win points
-	currentWord: ['sad', 'go', 'move', 'test'], 	// Storing words
+	currentWord: ['glen', 'negan', 'daryl', 'rick', 'carl', 'rosita', 'carol', 'michonne', 'maggie', 'hershel', 'tyreese', 'beth', 'lori', 'merle', 'jesus', 'governor', 'andrea', 'eugne', 'sasha', 'gabriel', 'abraham', 'morgan'], 	// Storing words
 
 	title: ['title1', 'title2', 'title3', 'title4'],
 
 	music: ['music1', 'music2', 'music3', 'music4'],
 
-	images: ['picture1', 'picture2', 'picture3', 'picture4'],
+	images: ['./images/glen.png', './images/negan.png', './images/daryl.jpg', './images/rick.png', './images/carl.png', './images/rosita.png', './images/carol.jpg', './images/michonne.jpg', './images/maggie.png', './images/hershel.png', './images/tyreese.png', './images/beth.png', './images/lori.jpg', './images/merle.jpg', './images/jesus.jpeg', './images/governor.jpg', './images/andrea.jpeg', './images/eugene.png', './images/sasha.png', './images/gabriel.png', './images/abraham.jpg', './images/morgan.png'],
 
 	
 	// Getting a random word from the current word array
 	randomWord: function(){
 		var result = Math.floor(Math.random() * this.currentWord.length);
 		var word = this.currentWord[result];
+		var title = this.title[result];
+		var music = this.music[result];
+		var images = this.images[result];
 
-		return word;
+		return [word, title, music, images];
 	},
 
 
 	// Storing value for guess remaining
 	guessRaiming: 8,
-
 
 	// Grabbing ID from the DOM by passing id as a parameter
 	grabId: function(element){
@@ -35,37 +39,21 @@ var hangman = {
 	}
 
 
-
 };
-
-// Pseudo Code
-
-
+console.log(hangman.images.length);
+console.log(hangman.currentWord.length);
 
 
-
-// Store the computer typing result (word)
-	// No letter twice to the DOM
-	// Output every letter to the DOM every time we're typing
-
-
-// Guess remaining
-
-// Generate a new word
-	// Output this word to the current word in DOM with (---)
-	// Check if the letter from computer typing equal any letter from the word
-		// then grab the Dash function and output the word accordingly 
-	// Check if the new generated word is equal to the computer typing result
-	 	// Reset computer typing result
-	 	// Generate another new word everytime :
-			// Chances remaining is equal to 0
-			// Current word is equal to computer typing result (word)
-			// Output it the current word in DOM with (--)
-
-var word = hangman.randomWord();
-
-var arr = word.split("");
+// Storing the word
+var word = hangman.randomWord()[0],
+	title = hangman.title,
+	music = hangman.music,
+	images = hangman.images,
+	arr = word.split("");
 console.log(word);
+// console.log(title);
+// console.log(music);
+// console.log(images);
 
 
 
@@ -93,22 +81,58 @@ replaceDash();
 
 
 
-var typing = [];
+var typing = [],
+	wordMatch = [],
+	anotherTyping = [],
+	norepeat = [];
 
 
-var wordMatch = [];
+// Reset the functionality
+function reset(){
+	word = hangman.randomWord()[0];
+	arr = word.split("");
+	console.log(word);
+	piece = [];
+	replaceDash();
+	hangman.output("currentWord", piece.join(""));
+	typing = [];
+	norepeat.length = 0;
+	hangman.guessRaiming = 9;
+	hangman.output("guessRemaining", "Your chances remaining is " + hangman.guessRaiming)
+	hangman.output("Guessed", norepeat)
 
-var anotherTyping = [];
-
-var norepeat = [];
-
+	return word, piece, typing, norepeat.length, hangman.guessRemaining;
+}
 
 
 
+function data(){
+	var result = hangman.currentWord;
+	// Working good
+	console.log(result);
+	return result.map(function(e, index, arr) {
+	if(word === e){
+		console.log(e);
+		console.log("Yay it worked!");
+		var test = result.indexOf(e);
+
+		hangman.output("title", title[test]);
+		console.log(title[test]);
+	}
+
+	});
+}
+
+data();
+
+
+// 
 document.onkeyup = function(event){
+
 	// Non Duplicated letters
 	hangman.output("currentWord", piece.join(""));
 
+	// Storing the typing
 	typing.push(event.key);
 
 		norepeat = typing.filter(function(e, index, self) {
@@ -124,75 +148,44 @@ document.onkeyup = function(event){
 				//wordMatch.push(e);
 				piece[index] = e;
 				hangman.output('currentWord', piece.join(""));
-				//console.log("Testing");
-
-
 		
 			}
-
-			else if(piece.join("") === word){
-					console.log("Yayyyy, it worked!");
-					// norepeat.length  = 0;
-
-					// hangman.output('Guessed', norepeat);
-
-					//console.log(piece.join(""));
-
-					// word = hangman.randomWord();
-
-					// console.log(word);
-					// console.log(norepeat);
-					// replaceDash();
-					// console.log(piece);
-					// console.log(norepeat);
-					// hangman.output('win', hangman.win++);
-				}
 
 
 			
 		});
 
-	console.log(norepeat);
-
+	// If the letter not equal any letter in the word
 	if(!word.includes(event.key)){
 		hangman.output("guessRemaining", "Your chances remaining is " + hangman.guessRaiming--);
 
-		if(hangman.guessRaiming <= -1){
+		if(hangman.guessRaiming <= -1){	
 			hangman.guessRaiming = 9;
-			hangman.output("guessRemaining", "Your chances remaining is " + hangman.guessRaiming--)	
+			hangman.output("guessRemaining", "Your chances remaining is " + hangman.guessRaiming--);
+			reset();
 		}
 
 	}
 
+	// if result of the typing word equal to the random word
 	else if(piece.join("") === word){
 		hangman.output("win", hangman.win++);
-
-		word = hangman.randomWord();
-
-		arr = word.split("");
-		console.log(word);
-		piece = [];
-		replaceDash();
-		hangman.output("currentWord", piece.join(""));
-		typing = [];
-		norepeat.length = 0;
-		hangman.guessRaiming = 9;
-		hangman.output("guessRemaining", "Your chances remaining is " + hangman.guessRaiming)
-
-		hangman.output("Guessed", norepeat)
-		console.log(norepeat);
-
+		reset();
+		console.log("testing");
 	}
-
-
-	console.log(norepeat);
-
-
-
+data();
 
 
 
 };
+
+
+// Pseudo
+// Loop through the current word array
+	// Check and see if the word equal to the element of the array
+		// Find the index of this word
+		// Output the right title according to the index
+
 
 
 // Generate a new word
@@ -206,18 +199,6 @@ document.onkeyup = function(event){
 			// Current word is equal to computer typing result (word)
 			// Output it the current word in DOM with (--)
 
-
-
-
-
-
-// if(norepeat.length === 0){
-// 	norepeat.length = 0;
-// 	console.log("Yayyy");
-// 	//console.log(norepeat);
-// 	console.log(norepeat);
-
-// }
 
 
 
