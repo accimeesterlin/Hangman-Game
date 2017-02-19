@@ -8,18 +8,15 @@ var hangman = {
 
 	music: ['music1', 'music2', 'music3', 'music4'],
 
-	images: ['./images/glen.png', './images/negan.png', './images/daryl.jpg', './images/rick.png', './images/carl.png', './images/rosita.png', './images/carol.jpg', './images/michonne.jpg', './images/maggie.png', './images/hershel.png', './images/tyreese.png', './images/beth.png', './images/lori.jpg', './images/merle.jpg', './images/jesus.jpeg', './images/governor.jpg', './images/andrea.jpeg', './images/eugene.png', './images/sasha.png', './images/gabriel.png', './images/abraham.jpg', './images/morgan.png'],
+	images: ['./assets/images/glen.png', './assets/images/negan.png', './assets/images/daryl.jpg', './assets/images/rick.png', './assets/images/carl.png', './assets/images/rosita.png', './assets/images/carol.jpg', './assets/images/michonne.jpg', './assets/images/maggie.png', './assets/images/hershel.png', './assets/images/tyreese.png', './assets/images/beth.png', './assets/images/lori.jpg', './assets/images/merle.jpg', './assets/images/jesus.jpeg', './assets/images/governor.jpg', './assets/images/andrea.jpeg', './assets/images/eugene.png', './assets/images/sasha.png', './assets/images/gabriel.png', './assets/images/abraham.jpg', './assets/images/morgan.png'],
 
 	
 	// Getting a random word from the current word array
 	randomWord: function(){
 		var result = Math.floor(Math.random() * this.currentWord.length),
-		 	word = this.currentWord[result],
-			title = this.title[result],
-			music = this.music[result],
-			images = this.images[result];
+		 	word = this.currentWord[result];
 
-		return [word, title, music, images];
+		return word;
 	},
 
 
@@ -46,7 +43,7 @@ console.log(hangman.currentWord.length);
 
 
 // Storing the word
-var word = hangman.randomWord()[0],
+var word = hangman.randomWord(),
 	title = hangman.title,
 	music = hangman.music,
 	images = hangman.images,
@@ -83,12 +80,13 @@ replaceDash();
 var typing = [],
 	wordMatch = [],
 	anotherTyping = [],
-	norepeat = [];
+	norepeat = [],
+	notEqual = [];
 
 
 // Reset the functionality
 function reset(){
-	word = hangman.randomWord()[0];
+	word = hangman.randomWord();
 	arr = word.split("");
 	piece = [];
 	replaceDash();
@@ -115,6 +113,7 @@ function data(){
 		var test = result.indexOf(e);
 
 		hangman.output("title", title[test]);
+		console.log(hangman.grabId("img").style.backgroundImage = "url(' " + images[test] + "')");
 		console.log(title[test]);
 	}
 
@@ -137,6 +136,8 @@ document.onkeyup = function(event){
 		return index == typing.indexOf(e);
 	});
 
+
+
 	hangman.output('Guessed', norepeat);
 
 
@@ -151,10 +152,13 @@ document.onkeyup = function(event){
 			
 		});
 
+	
+
 	// If the letter not equal any letter in the word
 	if(!word.includes(event.key)){
-		hangman.output("guessRemaining", "Your chances remaining is " + hangman.guessRaiming--);
-		hangman.grabId("guessRemaining").style.color = "black";
+			hangman.output("guessRemaining", "Your chances remaining is " + hangman.guessRaiming--);
+			
+			hangman.grabId("guessRemaining").style.color = "black";
 
 
 		if(hangman.guessRaiming < 6){
@@ -177,7 +181,9 @@ document.onkeyup = function(event){
 	}
 data();
 
-console.log(norepeat);
+
+
+console.log(notEqual);
 
 };
 
@@ -187,6 +193,8 @@ console.log(norepeat);
 	// Check and see if the word equal to the element of the array
 		// Find the index of this word
 		// Output the right title according to the index
+
+// 
 
 
 

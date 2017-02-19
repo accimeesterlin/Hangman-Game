@@ -59,6 +59,10 @@ body {
     		justify-content: center;
     		flex-direction: column-reverse;
     	}
+
+        #container{
+            width: 100%;
+        }
     }
 
 
@@ -67,6 +71,7 @@ footer{
 	bottom: 0;
 	background: lightgrey;
 	padding: 5rem;
+    width: 100%;
 
 
 }
