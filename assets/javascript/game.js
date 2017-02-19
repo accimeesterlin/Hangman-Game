@@ -13,11 +13,11 @@ var hangman = {
 	
 	// Getting a random word from the current word array
 	randomWord: function(){
-		var result = Math.floor(Math.random() * this.currentWord.length);
-		var word = this.currentWord[result];
-		var title = this.title[result];
-		var music = this.music[result];
-		var images = this.images[result];
+		var result = Math.floor(Math.random() * this.currentWord.length),
+		 	word = this.currentWord[result],
+			title = this.title[result],
+			music = this.music[result],
+			images = this.images[result];
 
 		return [word, title, music, images];
 	},
@@ -40,6 +40,7 @@ var hangman = {
 
 
 };
+
 console.log(hangman.images.length);
 console.log(hangman.currentWord.length);
 
@@ -50,6 +51,7 @@ var word = hangman.randomWord()[0],
 	music = hangman.music,
 	images = hangman.images,
 	arr = word.split("");
+
 console.log(word);
 // console.log(title);
 // console.log(music);
@@ -59,19 +61,16 @@ console.log(word);
 
 // Replacing the word with the Dash
 piece = [];
+
 function replaceDash(){
 	return arr.map(function(element, index){
-					// piece = [];
 					var result = arr[index].replace(arr[index], ' __ ');
-					// console.log(result);
 					piece.push(result);
-
-					// console.log(element);
 				});
 }
 
 replaceDash();
-//console.log(piece);
+
  hangman.output("currentWord", piece.join(""));
 
 
@@ -91,7 +90,6 @@ var typing = [],
 function reset(){
 	word = hangman.randomWord()[0];
 	arr = word.split("");
-	console.log(word);
 	piece = [];
 	replaceDash();
 	hangman.output("currentWord", piece.join(""));
@@ -109,7 +107,7 @@ function reset(){
 function data(){
 	var result = hangman.currentWord;
 	// Working good
-	console.log(result);
+	// console.log(result);
 	return result.map(function(e, index, arr) {
 	if(word === e){
 		console.log(e);
@@ -135,17 +133,15 @@ document.onkeyup = function(event){
 	// Storing the typing
 	typing.push(event.key);
 
-		norepeat = typing.filter(function(e, index, self) {
+		norepeat = typing.filter(function(e, index) {
 		return index == typing.indexOf(e);
 	});
-
 
 	hangman.output('Guessed', norepeat);
 
 
 		arr.map(function(e, index) {
 			if(e === event.key){
-				//wordMatch.push(e);
 				piece[index] = e;
 				hangman.output('currentWord', piece.join(""));
 		
@@ -158,6 +154,12 @@ document.onkeyup = function(event){
 	// If the letter not equal any letter in the word
 	if(!word.includes(event.key)){
 		hangman.output("guessRemaining", "Your chances remaining is " + hangman.guessRaiming--);
+		hangman.grabId("guessRemaining").style.color = "black";
+
+
+		if(hangman.guessRaiming < 6){
+			hangman.grabId("guessRemaining").style.color = "red";
+		}
 
 		if(hangman.guessRaiming <= -1){	
 			hangman.guessRaiming = 9;
@@ -175,7 +177,7 @@ document.onkeyup = function(event){
 	}
 data();
 
-
+console.log(norepeat);
 
 };
 

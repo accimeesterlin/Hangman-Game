@@ -1,5 +1,106 @@
-.test{
-	width: 400px;
-	margin-left:20px;
+body {
+    background-image: url("../images/weather.png");
+}
+#container{
+	width: 1180px;
+}
+.test {
+    width: 400px;
+    margin-left: 20px;
+
 
 }
+
+
+
+.go {
+    display: flex;
+}
+
+.img {
+    width: 400px;
+    height: 500px;
+    border-radius: 4px;
+    box-shadow: 4px 5px 5px rgba(0, 0, 0, 0.5);
+    background-image: url("../images/rick.png");
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: width 2s, height 2s, background 2s;
+}
+
+.img:hover {
+    width: 450px;
+    height: 550px;
+    background-image: -webkit-linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("../images/rick.png");
+    transition: width 2s, height 2s, background 2s;
+}
+
+.img h1 {
+    text-align: center;
+    color: #fff;
+    display: none;
+    transition: h1 2s;
+}
+
+.img:hover h1 {
+    display: inline;
+    transition: h1 2s;
+}
+
+.jumbotron h2 {
+    text-align: center;
+}
+
+@media (max-width: 992px){
+    	.esterling{
+    		display: flex;
+    		justify-content: center;
+    		flex-direction: column-reverse;
+    	}
+    }
+
+
+footer{
+	position: relative;
+	bottom: 0;
+	background: lightgrey;
+	padding: 5rem;
+
+
+}
+
+footer p{
+	text-align: center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
