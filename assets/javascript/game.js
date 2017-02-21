@@ -4,7 +4,7 @@ var hangman = {
 	win:1, 		// Storing the win points
 	currentWord: ['glen', 'negan', 'daryl', 'rick', 'carl', 'rosita', 'carol', 'michonne', 'maggie', 'hershel', 'tyreese', 'beth', 'lori', 'merle', 'jesus', 'governor', 'andrea', 'eugne', 'sasha', 'gabriel', 'abraham', 'morgan'], 	// Storing words
 
-	title: ['title1', 'title2', 'title3', 'title4'],
+	//title: ['title1', 'title2', 'title3', 'title4'],
 
 	music: ['music1', 'music2', 'music3', 'music4'],
 
@@ -21,7 +21,7 @@ var hangman = {
 
 
 	// Storing value for guess remaining
-	guessRaiming: 8,
+	guessRaiming:12,
 
 	// Grabbing ID from the DOM by passing id as a parameter
 	grabId: function(element){
@@ -38,13 +38,11 @@ var hangman = {
 
 };
 
-//console.log(hangman.images.length);
-//console.log(hangman.currentWord.length);
 
 
 // Storing the word
 var word = hangman.randomWord(),
-	title = hangman.title,
+	//title = hangman.title,
 	music = hangman.music,
 	images = hangman.images,
 	arr = word.split("");
@@ -72,8 +70,8 @@ replaceDash();
 
 
 
+hangman.output("guessRemaining", "Your chances remaining is " + hangman.guessRaiming);
 
-	
 
 
 
@@ -81,8 +79,7 @@ var typing = [],
 	wordMatch = [],
 	anotherTyping = [],
 	norepeat = [],
-	notEqual = [],
-	test = [];
+	notEqual = [];
 
 
 // Reset the functionality
@@ -94,7 +91,7 @@ function reset(){
 	hangman.output("currentWord", piece.join(""));
 	typing = [];
 	norepeat.length = 0;
-	hangman.guessRaiming = 9;
+	hangman.guessRaiming = 12;
 	hangman.output("guessRemaining", "Your chances remaining is " + hangman.guessRaiming)
 	hangman.output("Guessed", norepeat)
 
@@ -113,8 +110,8 @@ function data(){
 		//console.log("Yay it worked!");
 		var test = result.indexOf(e);
 
-		hangman.output("title", title[test]);
-		//console.log(hangman.grabId("img").style.backgroundImage = "url(' " + images[test] + "')");
+		//hangman.output("title", title[test]);
+		hangman.grabId("img").style.backgroundImage = "url(' " + images[test] + "')";
 		//console.log(title[test]);
 	}
 
@@ -126,7 +123,7 @@ data();
 
 // 
 document.onkeyup = function(event){
-
+hangman.grabId("warning").style.display = "none" ;	
 	// Non Duplicated letters
 	hangman.output("currentWord", piece.join(""));
 
@@ -157,42 +154,61 @@ document.onkeyup = function(event){
 
 	// If the letter not equal any letter in the word
 	if(!word.includes(event.key)){
-		test.push(event.key);
-
-		console.log(hangman.guessRaiming--);
-
-			//decrement if the letter is not inside the repeat letter;
-
-			//hangman.output("guessRemaining", "Your chances remaining is " + hangman.guessRaiming--);
+			hangman.guessRaiming--;
+			hangman.output("guessRemaining", "Your chances remaining is " + hangman.guessRaiming);
 
 			hangman.grabId("guessRemaining").style.color = "black";
+
+		if(hangman.guessRaiming <= 0){	
+			hangman.guessRaiming = 12;
+
+			hangman.grabId("audio").setAttribute('src', './assets/sound/monster.mp3');
+			hangman.grabId("audio").play();
+			$('.ui.modal').modal('show');
+			hangman.output("guessRemaining", "Your chances remaining is " + hangman.guessRaiming--);
+			reset();
+		}
 
 
 		if(hangman.guessRaiming < 6){
 			hangman.grabId("guessRemaining").style.color = "red";
-		}
+			hangman.grabId("audio").setAttribute('src', './assets/sound/woopwoop.mp3');
+			hangman.grabId("audio").play();
 
-		if(hangman.guessRaiming <= -1){	
-			hangman.guessRaiming = 9;
-			hangman.output("guessRemaining", "Your chances remaining is " + hangman.guessRaiming--);
-			reset();
+			hangman.grabId("warning").style.display = "block" ;
 		}
 
 	}
 
 	// if result of the typing word equal to the random word
 	else if(piece.join("") === word){
+		hangman.grabId("audio").setAttribute('src', './assets/sound/aplause.mp3');
+		hangman.grabId("audio").play();
 		hangman.output("win", hangman.win++);
 		reset();
-		//console.log("testing");
+
 	}
+
 data();
 
-console.log(test);
 
-//console.log(norepeat);
+
+
 
 };
+
+
+// Bonuses
+
+var scary = ['./assets/scary/scariest.jpeg', './assets/scary/scary1.jpg', './assets/scary/scary2.jpg', './assets/scary/scary3.jpg', './assets/scary/scary4.JPG'];
+
+
+var number = Math.floor(Math.random() * scary.length)
+
+hangman.grabId("scary").style.backgroundImage = "url('" + scary[number]+ "')";
+
+console.log(scary[number]);
+
 
 
 // Decrement every time the letter is not equal to the word

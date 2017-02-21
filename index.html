@@ -4,21 +4,64 @@
 <head>
     <meta charset="UTF-8">
     <title>Hangman 2017</title>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.7/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/semantic-ui/2.2.7/semantic.min.js"></script>
+
+
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
 <body>
+
+
+<!-- Pops up in the DOM -->
+
+<div class="ui modal" >
+  <i class="close icon"></i>
+<!--   <div class="header">
+    Profile Picture
+  </div> -->
+  <div class="image content" id="scary">
+
+    <div class="description" >
+      <div class="ui header"><!-- We've auto-chosen a profile image for you. --></div>
+      <!-- <p>We've grabbed the following image from the <a href="https://www.gravatar.com" target="_blank">gravatar</a> image associated with your registered e-mail address.</p>
+      <p>Is it okay to use this photo?</p> -->
+    </div>
+  </div>
+  <div class="actions" >
+    <div class="ui black deny button btn-primary">
+      Nope
+    </div>
+    <div class="ui positive right labeled icon button">
+      Yep, that's me
+      <i class="checkmark icon"></i>
+    </div>
+  </div>
+</div>
+
+
+
     <div class="container-fluid" id="container">
         <div class="jumbotron">
             <h2>Welcome to Walking Dead Hangman</h2>
         </div>
+
+        <p id="warning">Warning! You're less than 6 letters away!</p>
+
+
         <section class="row esterling">
             <div class="col-md-6">
                 <h3>Press any key to get started!</h3>
@@ -31,7 +74,6 @@
                     </div>
                 </div>
 
-                <h1 id="title"></h1>
                 <!-- Second row of data -->
                 <div class="panel panel-default test">
                     <div class="panel-heading">
@@ -46,7 +88,7 @@
                     <div class="panel-heading">
                         <h3>Number of Guesses Remaining</h3></div>
                     <div class="panel-body">
-                        <p id="guessRemaining">Your chances remaining is 9</p>
+                        <p id="guessRemaining"></p>
                     </div>
                 </div>
                 <!-- Fourth row of data -->
@@ -61,13 +103,23 @@
             </div>
 
             <div class="col-md-6">
-                <h1>Testing</h1>
                 <div class="img" id="img">
                     <h1>You'd better guess the right answer or ...?</h1>
-                </div>
+                </div> 
+                <br>
+
+                <p>Name this Walking Dead Actor..... Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi culpa, laboriosam magni enim quos, sint nostrum eos ut fugiat eius esse modi similique quis sequi dolorum facere animi neque optio? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi nihil, illo aperiam minima corrupti, </p>
             </div>
         </section>
     </div>	
+
+
+
+
+
+<audio id="audio">
+    
+</audio>
     <script src="./assets//javascript/game.js"></script>
 
 <footer>
