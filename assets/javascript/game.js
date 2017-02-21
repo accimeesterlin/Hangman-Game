@@ -125,10 +125,10 @@ data();
 document.onkeyup = function(event){
 hangman.grabId("warning").style.display = "none" ;	
 	// Non Duplicated letters
-	hangman.output("currentWord", piece.join(""));
+	hangman.output("currentWord", piece.join("").toUpperCase());
 
 	// Storing the typing
-	typing.push(event.key);
+	typing.push(event.key.toUpperCase());
 
 		norepeat = typing.filter(function(e, index) {
 		return index == typing.indexOf(e);
@@ -142,7 +142,7 @@ hangman.grabId("warning").style.display = "none" ;
 		arr.map(function(e, index) {
 			if(e === event.key){
 				piece[index] = e;
-				hangman.output('currentWord', piece.join(""));
+				hangman.output('currentWord', piece.join("").toUpperCase());
 		
 			}
 
