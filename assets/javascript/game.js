@@ -38,8 +38,8 @@ var hangman = {
 
 };
 
-console.log(hangman.images.length);
-console.log(hangman.currentWord.length);
+//console.log(hangman.images.length);
+//console.log(hangman.currentWord.length);
 
 
 // Storing the word
@@ -81,7 +81,8 @@ var typing = [],
 	wordMatch = [],
 	anotherTyping = [],
 	norepeat = [],
-	notEqual = [];
+	notEqual = [],
+	test = [];
 
 
 // Reset the functionality
@@ -108,13 +109,13 @@ function data(){
 	// console.log(result);
 	return result.map(function(e, index, arr) {
 	if(word === e){
-		console.log(e);
-		console.log("Yay it worked!");
+		// console.log(e);
+		//console.log("Yay it worked!");
 		var test = result.indexOf(e);
 
 		hangman.output("title", title[test]);
-		console.log(hangman.grabId("img").style.backgroundImage = "url(' " + images[test] + "')");
-		console.log(title[test]);
+		//console.log(hangman.grabId("img").style.backgroundImage = "url(' " + images[test] + "')");
+		//console.log(title[test]);
 	}
 
 	});
@@ -156,8 +157,14 @@ document.onkeyup = function(event){
 
 	// If the letter not equal any letter in the word
 	if(!word.includes(event.key)){
-			hangman.output("guessRemaining", "Your chances remaining is " + hangman.guessRaiming--);
-			
+		test.push(event.key);
+
+		console.log(hangman.guessRaiming--);
+
+			//decrement if the letter is not inside the repeat letter;
+
+			//hangman.output("guessRemaining", "Your chances remaining is " + hangman.guessRaiming--);
+
 			hangman.grabId("guessRemaining").style.color = "black";
 
 
@@ -177,25 +184,19 @@ document.onkeyup = function(event){
 	else if(piece.join("") === word){
 		hangman.output("win", hangman.win++);
 		reset();
-		console.log("testing");
+		//console.log("testing");
 	}
 data();
 
+console.log(test);
 
-
-console.log(notEqual);
+//console.log(norepeat);
 
 };
 
 
-// Pseudo
-// Loop through the current word array
-	// Check and see if the word equal to the element of the array
-		// Find the index of this word
-		// Output the right title according to the index
-
-// 
-
+// Decrement every time the letter is not equal to the word
+	// decrement if the letter is not inside the repeat letter;
 
 
 // Generate a new word
